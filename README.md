@@ -73,20 +73,20 @@ can also edit by hand (then `make restart`); every field is optional, see `confi
 | `instant` | `false` | switch desktops with no slide animation |
 
 A combo is `modifier+...+key` with at least one of `ctrl`, `cmd`, `alt` (plus `shift` if you like),
-and a key from `a`–`z`, `0`–`9`, `up`, `down`, `left`, `right`. Errors go to
-`~/Library/Logs/workspace-matrix.log`.
+and a key from `a`–`z`, `0`–`9`, `up`, `down`, `left`, `right`. `make logs` follows what the app logs.
 
 ## How it works
 
 - It reads which desktop you're on through read-only private SkyLight calls, the way Spaces
   indicator apps do.
 - Normal switching presses your own "Switch to Desktop N" shortcut. Instant switching posts a
-  synthetic trackpad swipe so fast that macOS skips the animation, using code from
+  synthetic trackpad swipe so fast that macOS skips the animation, ported from
   [InstantSpaceSwitcher](https://github.com/jurplel/InstantSpaceSwitcher).
 - The grid lives in its own always-visible space above the desktops, so it doesn't slide with them.
 
 None of this needs System Integrity Protection turned off, but private APIs can change with any macOS
-update.
+update; [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#private-apis) lists each one and what stops working
+without it.
 
 ## Limitations
 
@@ -97,9 +97,14 @@ update.
 ## Develop
 
 ```sh
-make test
-swift run
+make check    # the gate: lint, a warning-free build, the tests (CI runs it too)
+make fmt      # format the code
+make install  # build and run your changes
+make logs     # follow the app's log
 ```
+
+How the code is laid out and why: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). The rules it follows:
+[docs/STANDARDS.md](docs/STANDARDS.md). What changed: [CHANGELOG.md](CHANGELOG.md).
 
 ## Credits
 
