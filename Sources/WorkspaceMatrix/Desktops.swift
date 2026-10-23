@@ -1,5 +1,4 @@
 import AppKit
-import ISS
 
 // Private but read-only SkyLight calls (as used by Spaces indicator apps); they need no SIP changes.
 @_silgen_name("CGSMainConnectionID") private func CGSMainConnectionID() -> Int32
@@ -26,13 +25,30 @@ enum Desktops {
         return spaces.compactMap { desktops.firstIndex(of: $0.uint64Value) }
     }
 
+    /// Where the active space and desktop `index` sit among all spaces of their display. Swipes step
+    /// through fullscreen apps too, so their count is in these positions, not in desktop indexes.
+    private static func swipePositions(toDesktop index: Int) -> (from: Int, to: Int)? {
+        let connection = CGSMainConnectionID()
+        let active = CGSGetActiveSpace(connection)
+        let spaces = activeDisplaySpaces(connection, active).map(spaceID)
+        let desktops = activeDisplayDesktops(connection, active)
+        guard let from = spaces.firstIndex(of: active), desktops.indices.contains(index),
+              let to = spaces.firstIndex(of: desktops[index])
+        else { return nil }
+        return (from, to)
+    }
+
     /// Space IDs of the desktops (not fullscreen apps) on the display showing `active`.
     private static func activeDisplayDesktops(_ connection: Int32, _ active: UInt64) -> [UInt64?] {
+        activeDisplaySpaces(connection, active).filter { ($0["type"] as? Int) == 0 }.map(spaceID)
+    }
+
+    /// Every space (desktops and fullscreen apps, in order) on the display showing `active`.
+    private static func activeDisplaySpaces(_ connection: Int32, _ active: UInt64) -> [[String: Any]] {
         let displays = CGSCopyManagedDisplaySpaces(connection) as? [[String: Any]] ?? []
         for display in displays {
             let spaces = display["Spaces"] as? [[String: Any]] ?? []
-            guard spaces.contains(where: { spaceID($0) == active }) else { continue }
-            return spaces.filter { ($0["type"] as? Int) == 0 }.map(spaceID)
+            if spaces.contains(where: { spaceID($0) == active }) { return spaces }
         }
         return []
     }
@@ -41,7 +57,12 @@ enum Desktops {
     /// Instant: posts trackpad swipes so fast that macOS skips the slide.
     static func switchTo(_ index: Int, instant: Bool) {
         if instant {
-            if !iss_switch_to_index(UInt32(index)) { log("instant switch to desktop \(index + 1) failed") }
+            guard let (from, to) = swipePositions(toDesktop: index) else {
+                return log("desktop \(index + 1) isn't on the active display")
+            }
+            if from != to, !DockSwipe.post(to > from ? .right : .left, steps: abs(to - from)) {
+                log("instant switch to desktop \(index + 1) failed")
+            }
             return
         }
         guard let (key, flags) = shortcut(index) else {

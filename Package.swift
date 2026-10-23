@@ -16,6 +16,6 @@ let package = Package(
             ]
         ),
         .executableTarget(name: "WorkspaceMatrix", dependencies: ["ISS"]),
-        .testTarget(name: "WorkspaceMatrixTests", dependencies: ["WorkspaceMatrix"]),
+        .testTarget(name: "WorkspaceMatrixTests", dependencies: ["WorkspaceMatrix", "ISS"]),
     ]
 )

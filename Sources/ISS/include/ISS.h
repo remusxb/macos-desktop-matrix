@@ -118,4 +118,8 @@ void iss_set_overlay_detection_enabled(bool enabled);
  */
 void iss_set_gesture_speed(double speed);
 
+// Exposed for one commit so the Swift port can be compared with it byte for byte.
+#include <ApplicationServices/ApplicationServices.h>
+CGEventRef iss_augment_dock_swipe_event(CGEventRef event);
+
 #endif /* _ISS_H */
