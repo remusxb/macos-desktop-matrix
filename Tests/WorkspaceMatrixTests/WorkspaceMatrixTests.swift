@@ -66,6 +66,15 @@ private final class FakeDesktops {
     #expect(mac.switches == [1, 3])  // then one jump to the latest
     mac.desktop = 3
     #expect(mac.navigator.arrived(at: 3))
+    #expect(!mac.navigator.isNavigating)
+}
+
+@Test func switchesFromElsewhereAreNotOurs() {
+    let mac = FakeDesktops()
+    #expect(!mac.navigator.isNavigating)  // a swipe: no grid
+    #expect(mac.navigator.arrived(at: 4))
+    mac.navigator.request(5)
+    #expect(mac.navigator.isNavigating)  // our key: grid stays up until it lands
 }
 
 @Test func ignoresHopsOfAnInstantSwitch() {

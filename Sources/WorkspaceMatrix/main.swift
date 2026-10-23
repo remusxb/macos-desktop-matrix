@@ -76,14 +76,15 @@ let statusMenu = StatusMenu(model: SettingsModel(config, onChange: { new in
     if paused { hotKeys.unregisterAll() } else { apply(config) }
 }))
 
-// Show the grid on every desktop change (swipes, shortcuts, Mission Control) and keep it up
-// until after the switch lands, so you see where you arrived.
+// Track every desktop change (swipes, macOS shortcuts, Mission Control) for position and previews, but
+// bring the grid up only for our own keys, keeping it until the switch lands so you see where you arrived.
 NSWorkspace.shared.notificationCenter.addObserver(
     forName: NSWorkspace.activeSpaceDidChangeNotification, object: nil, queue: .main
 ) { _ in
+    let ours = navigator.isNavigating
     guard let index = Desktops.state().index, navigator.arrived(at: index), index < grid.count else { return }
     current = index
-    overlay.show(index)
+    if ours || overlay.isShown { overlay.show(index) }
     // Refresh this desktop's preview once the switch has settled, if we're still on it.
     DispatchQueue.main.asyncAfter(deadline: .now() + (config.instant ? 0.15 : 0.5)) {
         guard Desktops.state().index == index else { return }

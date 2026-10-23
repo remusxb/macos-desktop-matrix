@@ -27,6 +27,9 @@ final class Navigator {
         self.after = after
     }
 
+    /// True from a request until macOS lands on it (or gives up).
+    var isNavigating: Bool { requested != nil || posted != nil }
+
     func request(_ index: Int) {
         requested = index
         attempts = 0

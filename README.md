@@ -13,8 +13,9 @@ Workspace Matrix, with a HUD that shows where you are and a preview of every des
 - **Previews** of every desktop, composed from its windows at launch and refreshed with a screenshot
   each time you arrive on or leave a desktop.
 - **Instant switching** (optional): no slide animation.
-- **The grid stays put** in the middle of the screen while the desktop changes underneath, and it also
-  shows up when you switch some other way (swipes, Mission Control, your desktop shortcuts).
+- **The grid stays put** in the middle of the screen while the desktop changes underneath. It only shows
+  up for its own keys; switching some other way (swipes, Mission Control, macOS shortcuts) is tracked
+  quietly, so the grid and previews are still right next time.
 - **No lost presses**: presses made while macOS is still switching are folded into one jump to the
   last one, so the grid never runs ahead of the screen.
 - **Settings** from the menu bar icon, applied as you change them, with key combo recording.
