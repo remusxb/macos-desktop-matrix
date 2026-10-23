@@ -2,7 +2,8 @@ import CoreGraphics
 import Foundation
 
 /// Instant desktop switching: a synthetic trackpad swipe so fast that the Dock skips its slide.
-/// Ported from InstantSpaceSwitcher by jurplel (MIT): https://github.com/jurplel/InstantSpaceSwitcher
+/// Ported from InstantSpaceSwitcher by jurplel, MIT: https://github.com/jurplel/InstantSpaceSwitcher
+/// (its notice is in LICENSES/InstantSpaceSwitcher.txt).
 enum DockSwipe {
     enum Direction {
         case left, right

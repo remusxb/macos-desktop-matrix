@@ -103,8 +103,8 @@ swift run
 
 ## Credits
 
-Instant switching is vendored from [InstantSpaceSwitcher](https://github.com/jurplel/InstantSpaceSwitcher)
-by jurplel, under the MIT license (`Sources/ISS/LICENSE`).
+Instant switching is ported to Swift from [InstantSpaceSwitcher](https://github.com/jurplel/InstantSpaceSwitcher)
+by jurplel, under the MIT license ([its notice](LICENSES/InstantSpaceSwitcher.txt)).
 
 ## License
 

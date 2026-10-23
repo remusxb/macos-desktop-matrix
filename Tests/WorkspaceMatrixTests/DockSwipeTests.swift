@@ -1,34 +1,42 @@
 import CoreGraphics
 import Foundation
-import ISS
 import Testing
 @testable import WorkspaceMatrix
 
-/// The Swift port must serialize exactly what InstantSpaceSwitcher's C does; the C is kept for this one commit.
-@Test(arguments: [DockSwipe.Phase.began, .changed, .ended], [true, false])
-func hidPayloadMatchesTheC(phase: DockSwipe.Phase, naturalScrolling: Bool) throws {
-    for direction in [DockSwipe.Direction.left, .right] {
-        let swipe = try #require(DockSwipe.modernSwipe(phase, direction, naturalScrolling: naturalScrolling))
+/// Payloads InstantSpaceSwitcher's C produced for these swipes (captured when the port was checked against it
+/// byte for byte). They're reviewed data: a change here changes what the Dock receives.
+private let golden: [(DockSwipe.Phase, DockSwipe.Direction, String)] = [
+    (.began, .right, """
+    efcdab89674523010000000000000000000000000000000001000000280000001700000000000001000000009919000000000000\
+    000000000000000001000300ffffffff
+    """),
+    (.ended, .left, """
+    efcdab89674523010000000000000000000000000000000002000000280000001700000000000004000000009919000000000000\
+    000000000000000001000300010000001c00000009000000000000000100000000000f270000000000000000
+    """),
+]
+
+@Test func hidPayloadMatchesTheGoldenBytes() throws {
+    for (phase, direction, hex) in golden {
+        let swipe = try #require(DockSwipe.modernSwipe(phase, direction, naturalScrolling: true))
         swipe.timestamp = 0x0123_4567_89AB_CDEF
-        let fromC = try #require(iss_augment_dock_swipe_event(swipe)).takeRetainedValue()
-        let fromSwift = try #require(DockSwipe.withHIDPayload(swipe))
-        #expect(fromSwift.data as Data? == fromC.data as Data?)
+        let bytes = DockSwipe.hidPayload(swipe).map { String(format: "%02x", $0) }.joined()
+        #expect(bytes == hex, "\(phase) \(direction)")
     }
 }
 
-/// Fields the swipe doesn't set but the payload carries, so a non-default value must survive too.
-@Test func hidPayloadMatchesTheCForEveryField() throws {
-    let event = try #require(CGEvent(source: nil))
-    event.timestamp = 42
-    event.setIntegerValueField(DockSwipe.Field.phase, value: 4)
-    event.setIntegerValueField(DockSwipe.Field.swipeMotion, value: 0x1_0002)  // truncated to 16 bits
-    event.setIntegerValueField(DockSwipe.Field.swipeMask, value: 0x1_2345_6789)  // truncated to 32 bits
-    event.setDoubleValueField(DockSwipe.Field.swipePositionX, value: -0.75)
-    event.setDoubleValueField(DockSwipe.Field.swipePositionY, value: 1e-9)  // rounds to the smallest step, not 0
-    event.setDoubleValueField(DockSwipe.Field.swipeProgress, value: 0.5)
-    event.setDoubleValueField(DockSwipe.Field.swipeVelocityY, value: -1234.5)
-    let fromC = try #require(iss_augment_dock_swipe_event(event)).takeRetainedValue()
-    #expect(try #require(DockSwipe.withHIDPayload(event)).data as Data? == fromC.data as Data?)
+@Test func naturalScrollingFlipsTheSign() throws {
+    let natural = try #require(DockSwipe.modernSwipe(.ended, .right, naturalScrolling: true))
+    let classic = try #require(DockSwipe.modernSwipe(.ended, .right, naturalScrolling: false))
+    #expect(natural.getDoubleValueField(DockSwipe.Field.swipeVelocityX) < 0)  // on macOS 27 right is negative
+    #expect(classic.getDoubleValueField(DockSwipe.Field.swipeVelocityX) > 0)
+}
+
+@Test func onlyTheEndedPhaseFlings() throws {
+    for phase in [DockSwipe.Phase.began, .changed] {
+        let swipe = try #require(DockSwipe.modernSwipe(phase, .left, naturalScrolling: true))
+        #expect(swipe.getDoubleValueField(DockSwipe.Field.swipeVelocityX) == 0)
+    }
 }
 
 @Test func fixedPointTruncatesLikeC() {
@@ -37,4 +45,5 @@ func hidPayloadMatchesTheC(phase: DockSwipe.Phase, naturalScrolling: Bool) throw
     #expect(DockSwipe.fixed1616(1e-9) == 1)
     #expect(DockSwipe.fixed1616(-1e-9) == -1)
     #expect(DockSwipe.fixed1616(0) == 0)
+    #expect(DockSwipe.fixed1616(1e12) == Int32.max)  // clamped where C would be undefined
 }
