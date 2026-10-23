@@ -1,0 +1,13 @@
+{
+  "rows": 4,
+  "cols": 4,
+  "wrap": false,
+  "keys": {
+    "up": "ctrl+cmd+up",
+    "down": "ctrl+cmd+down",
+    "left": "ctrl+cmd+left",
+    "right": "ctrl+cmd+right"
+  },
+  "tileWidth": 160,
+  "hideAfter": 0.6
+}
