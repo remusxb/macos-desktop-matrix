@@ -1,6 +1,6 @@
 import CoreGraphics
+import DesktopMatrixCore
 import Testing
-import WorkspaceMatrixCore
 
 @Test func stepsStopAtTheEdges() {
     let grid = Grid(rows: 3, cols: 4, wrap: false)

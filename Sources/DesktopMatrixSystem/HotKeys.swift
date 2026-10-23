@@ -1,5 +1,5 @@
 import Carbon.HIToolbox
-import WorkspaceMatrixCore
+import DesktopMatrixCore
 
 /// Global hotkeys through Carbon. macOS tells the app only when one of its own combos is pressed, so it never
 /// sees any other keystroke, and this needs neither Input Monitoring nor Accessibility.
@@ -7,8 +7,8 @@ import WorkspaceMatrixCore
 public final class HotKeys {
     private var actions: [UInt32: @MainActor () -> Void] = [:]
     private var refs: [EventHotKeyRef] = []
-    /// "WMTX": tags our hotkeys among the app's Carbon events.
-    private static let signature: OSType = 0x574D_5458
+    /// "DMTX": tags our hotkeys among the app's Carbon events.
+    private static let signature: OSType = 0x444D_5458
 
     /// Starts listening for presses of the combos registered later.
     public init() {

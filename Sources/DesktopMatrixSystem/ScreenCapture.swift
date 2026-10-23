@@ -1,6 +1,6 @@
 import CoreGraphics
+import DesktopMatrixCore
 @preconcurrency import ScreenCaptureKit
-import WorkspaceMatrixCore
 
 /// Desktop previews: screenshots of the main display, minus the app's own grid, and Mission Control–style
 /// previews composed from each desktop's windows. Needs Screen Recording; without it every call returns

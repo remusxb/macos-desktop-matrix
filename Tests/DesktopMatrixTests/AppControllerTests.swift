@@ -1,8 +1,8 @@
 import CoreGraphics
+import DesktopMatrixCore
 import Testing
-import WorkspaceMatrixCore
 
-@testable import WorkspaceMatrix
+@testable import DesktopMatrix
 
 @MainActor
 private final class FakeDesktops: DesktopsInterface {

@@ -1,16 +1,16 @@
 # Architecture
 
-Workspace Matrix is a menu bar app that lays macOS's own desktops out as a grid. It never emulates desktops:
+Desktop Matrix is a menu bar app that lays macOS's own desktops out as a grid. It never emulates desktops:
 it reads where macOS is and asks macOS to switch, so Mission Control, swipes and the grid always agree.
 
 ## Modules
 
 ```mermaid
 flowchart TD
-    App["WorkspaceMatrix<br/>main.swift: wiring<br/>AppController: what the app does"]
-    UI["WorkspaceMatrixUI<br/>Overlay, Settings, StatusMenu"]
-    System["WorkspaceMatrixSystem<br/>Desktops, DesktopSwitcher, DockSwipe,<br/>HotKeys, ScreenCapture, DesktopPinning,<br/>ConfigFile, Permissions, SkyLight"]
-    Core["WorkspaceMatrixCore<br/>Grid, KeyCombo, Config,<br/>Navigator, TileLayout, Log"]
+    App["DesktopMatrix<br/>main.swift: wiring<br/>AppController: what the app does"]
+    UI["DesktopMatrixUI<br/>Overlay, Settings, StatusMenu"]
+    System["DesktopMatrixSystem<br/>Desktops, DesktopSwitcher, DockSwipe,<br/>HotKeys, ScreenCapture, DesktopPinning,<br/>ConfigFile, Permissions, SkyLight"]
+    Core["DesktopMatrixCore<br/>Grid, KeyCombo, Config,<br/>Navigator, TileLayout, Log"]
     App --> UI
     App --> System
     UI --> Core

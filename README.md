@@ -1,7 +1,7 @@
-# Workspace Matrix
+# Desktop Matrix
 
 Your macOS desktops as a grid. Move between them with `ctrl+cmd+arrows`, like GNOME's
-Workspace Matrix, with a HUD that shows where you are and a preview of every desktop.
+Workspace Matrix extension, with a HUD that shows where you are and a preview of every desktop.
 
 ![The grid while switching desktops](docs/overlay.png)
 
@@ -32,18 +32,18 @@ Workspace Matrix, with a HUD that shows where you are and a preview of every des
 ## Install
 
 ```sh
-git clone https://github.com/remusxb/macos-workspace-matrix.git
-cd macos-workspace-matrix
+git clone https://github.com/remusxb/macos-desktop-matrix.git
+cd macos-desktop-matrix
 make install
 ```
 
-This builds `~/Applications/WorkspaceMatrix.app` and starts it now and at every login. macOS then asks
+This builds `~/Applications/DesktopMatrix.app` and starts it now and at every login. macOS then asks
 for the two [permissions](#permissions) below; run `make restart` after granting them.
 `make uninstall` removes the app and the login item.
 
 ## Permissions
 
-Both are granted to **Workspace Matrix** in System Settings → Privacy & Security.
+Both are granted to **Desktop Matrix** in System Settings → Privacy & Security.
 
 | permission | why | without it |
 |---|---|---|
@@ -60,7 +60,7 @@ What it doesn't do:
 
 ## Settings
 
-Menu bar icon → Settings…. Everything is saved to `~/.config/workspace-matrix/config.json`, which you
+Menu bar icon → Settings…. Everything is saved to `~/.config/desktop-matrix/config.json`, which you
 can also edit by hand (then `make restart`); every field is optional, see `config.example.json`.
 
 | field | default | |

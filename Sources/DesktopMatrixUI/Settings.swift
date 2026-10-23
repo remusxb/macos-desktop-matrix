@@ -1,6 +1,6 @@
 import AppKit
+import DesktopMatrixCore
 import SwiftUI
-import WorkspaceMatrixCore
 
 /// What the settings window edits. Every change goes to `onChange`, which saves and applies it.
 @MainActor

@@ -9,14 +9,14 @@ Architecture, and why it's shaped this way: [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Layout and dependencies
 
-- **S1 Four modules, one direction.** `WorkspaceMatrix` (the app) depends on `WorkspaceMatrixSystem` and
-  `WorkspaceMatrixUI`, which both depend only on `WorkspaceMatrixCore`. Core imports nothing but Foundation,
+- **S1 Four modules, one direction.** `DesktopMatrix` (the app) depends on `DesktopMatrixSystem` and
+  `DesktopMatrixUI`, which both depend only on `DesktopMatrixCore`. Core imports nothing but Foundation,
   CoreGraphics and os. *(compiler: Package.swift; test: coreImportsOnlyFoundationCoreGraphicsAndOS)*
 - **S2 `main.swift` is wiring only:** build the parts, connect them, start. What the app does lives in
   `AppController`. *(review)*
 - **S3 Code lives in the lowest module that can hold it.** Logic that doesn't need macOS goes in Core, where
   it's tested without macOS. *(review)*
-- **S4 Private macOS symbols are declared once,** in `WorkspaceMatrixSystem/SkyLight.swift`, and looked up at
+- **S4 Private macOS symbols are declared once,** in `DesktopMatrixSystem/SkyLight.swift`, and looked up at
   runtime. *(test: onlySkyLightLooksUpPrivateSymbols)*
 - **S5 A missing private symbol turns off the feature that needs it,** logged once; it never stops the app
   from launching. *(review)*
@@ -24,7 +24,7 @@ Architecture, and why it's shaped this way: [ARCHITECTURE.md](ARCHITECTURE.md).
 ## Interfaces and construction
 
 - **S6 The consumer declares the interface it needs,** listing only what it calls: `AppController`'s are in
-  `WorkspaceMatrix/Interfaces.swift`, and the real types conform there. *(review)*
+  `DesktopMatrix/Interfaces.swift`, and the real types conform there. *(review)*
 - **S7 Dependencies come in through `init`.** No singletons, no global mutable state; statics are constants.
   *(compiler, under Swift 6, for unprotected global state; review)*
 - **S8 An adapter wraps one macOS facility** (desktops, switching, hotkeys, capture, pinning, the settings

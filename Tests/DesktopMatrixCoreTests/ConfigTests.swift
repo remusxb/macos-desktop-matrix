@@ -1,6 +1,6 @@
+import DesktopMatrixCore
 import Foundation
 import Testing
-import WorkspaceMatrixCore
 
 @Test func aPartialFileKeepsTheDefaults() throws {
     let config = try JSONDecoder().decode(

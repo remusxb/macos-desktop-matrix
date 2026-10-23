@@ -1,7 +1,7 @@
 import Carbon.HIToolbox
+import DesktopMatrixCore
 import Foundation
 import Testing
-import WorkspaceMatrixCore
 
 @Test func parsesCombos() throws {
     let combo = try #require(KeyCombo("ctrl+cmd+up"))

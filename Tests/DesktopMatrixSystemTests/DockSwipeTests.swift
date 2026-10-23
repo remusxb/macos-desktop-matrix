@@ -2,7 +2,7 @@ import CoreGraphics
 import Foundation
 import Testing
 
-@testable import WorkspaceMatrixSystem
+@testable import DesktopMatrixSystem
 
 /// Payloads InstantSpaceSwitcher's C produced for these swipes (captured when the port was checked against it
 /// byte for byte). They're reviewed data: a change here changes what the Dock receives.

@@ -1,11 +1,11 @@
+import DesktopMatrixCore
 import Foundation
-import WorkspaceMatrixCore
 
 /// The settings file. Editing it by hand works too; the app reads it at launch.
 public struct ConfigFile: Sendable {
-    /// ~/.config/workspace-matrix/config.json.
+    /// ~/.config/desktop-matrix/config.json.
     public static let standard = ConfigFile(
-        url: FileManager.default.homeDirectoryForCurrentUser.appending(path: ".config/workspace-matrix/config.json"))
+        url: FileManager.default.homeDirectoryForCurrentUser.appending(path: ".config/desktop-matrix/config.json"))
 
     /// Where the file is.
     public let url: URL

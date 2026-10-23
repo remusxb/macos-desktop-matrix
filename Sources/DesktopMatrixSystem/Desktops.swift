@@ -1,6 +1,6 @@
 import CoreGraphics
+import DesktopMatrixCore
 import Foundation
-import WorkspaceMatrixCore
 
 /// The native macOS desktops on the display showing the active one: the same ones Mission Control and
 /// trackpad swipes show. Read through SkyLight; nothing here changes anything.

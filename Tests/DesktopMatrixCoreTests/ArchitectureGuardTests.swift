@@ -22,7 +22,7 @@ private let sources: [(path: String, text: String)] = {
 /// S1: Core builds on nothing but the platform's basics.
 @Test func coreImportsOnlyFoundationCoreGraphicsAndOS() {
     let allowed: Set = ["Foundation", "CoreGraphics", "os"]
-    for file in sources where file.path.hasPrefix("Sources/WorkspaceMatrixCore/") {
+    for file in sources where file.path.hasPrefix("Sources/DesktopMatrixCore/") {
         for line in file.text.split(separator: "\n") where line.hasPrefix("import ") {
             #expect(allowed.contains(String(line.dropFirst("import ".count))), "\(file.path): \(line)")
         }
@@ -31,7 +31,7 @@ private let sources: [(path: String, text: String)] = {
 
 /// S4: private symbols are declared in one place.
 @Test func onlySkyLightLooksUpPrivateSymbols() {
-    for file in sources where file.path != "Sources/WorkspaceMatrixSystem/SkyLight.swift" {
+    for file in sources where file.path != "Sources/DesktopMatrixSystem/SkyLight.swift" {
         for marker in ["dlsym(", "dlopen(", "@_silgen_name"] {
             #expect(!file.text.contains(marker), "\(file.path) uses \(marker)")
         }

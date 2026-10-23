@@ -1,7 +1,7 @@
 import AppKit
-import WorkspaceMatrixCore
-import WorkspaceMatrixSystem
-import WorkspaceMatrixUI
+import DesktopMatrixCore
+import DesktopMatrixSystem
+import DesktopMatrixUI
 
 // Wiring only: what the app does is in AppController.
 

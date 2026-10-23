@@ -1,6 +1,6 @@
 import AppKit
+import DesktopMatrixCore
 import SwiftUI
-import WorkspaceMatrixCore
 
 /// The grid HUD in the middle of the screen. It fades out `hideAfter` seconds after the last `show`.
 @MainActor

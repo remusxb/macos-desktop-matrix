@@ -1,6 +1,6 @@
 import CoreGraphics
+import DesktopMatrixCore
 import Foundation
-import WorkspaceMatrixCore
 
 /// Switches desktops the way macOS itself does, so Mission Control and swipes always agree with the grid.
 public struct DesktopSwitcher: Sendable {

@@ -1,6 +1,6 @@
 @preconcurrency import ApplicationServices
 import CoreGraphics
-import WorkspaceMatrixCore
+import DesktopMatrixCore
 
 /// The two permissions the app asks for (README, Permissions): macOS shows its own prompt for each.
 public enum Permissions {

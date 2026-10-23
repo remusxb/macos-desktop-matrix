@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleIdentifier</key>
-    <string>local.workspace-matrix</string>
+    <string>io.github.remusxb.desktop-matrix</string>
     <key>CFBundleName</key>
-    <string>Workspace Matrix</string>
+    <string>Desktop Matrix</string>
     <key>CFBundleDisplayName</key>
-    <string>Workspace Matrix</string>
+    <string>Desktop Matrix</string>
     <key>CFBundleExecutable</key>
-    <string>workspace-matrix</string>
+    <string>desktop-matrix</string>
     <key>CFBundleShortVersionString</key>
     <string>0.1.0</string>
     <key>CFBundleVersion</key>

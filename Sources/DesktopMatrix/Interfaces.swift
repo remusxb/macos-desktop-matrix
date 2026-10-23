@@ -1,7 +1,7 @@
 import AppKit
-import WorkspaceMatrixCore
-import WorkspaceMatrixSystem
-import WorkspaceMatrixUI
+import DesktopMatrixCore
+import DesktopMatrixSystem
+import DesktopMatrixUI
 
 // What AppController needs from the rest of the app, declared here by the one that uses it, so tests can
 // hand it fakes. The real types conform below.

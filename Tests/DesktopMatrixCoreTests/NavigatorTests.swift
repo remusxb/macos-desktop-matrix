@@ -1,5 +1,5 @@
+import DesktopMatrixCore
 import Testing
-import WorkspaceMatrixCore
 
 /// A Navigator wired to a fake macOS: it records switches and lets the test fire pending retries.
 @MainActor

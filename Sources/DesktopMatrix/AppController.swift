@@ -1,5 +1,5 @@
 import CoreGraphics
-import WorkspaceMatrixCore
+import DesktopMatrixCore
 
 /// What the app does: its keys move through the grid and switch desktops; every desktop change, whoever
 /// makes it, is tracked and refreshes that desktop's preview; but the grid shows only for the app's own keys.

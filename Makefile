@@ -1,12 +1,12 @@
-# Builds, checks and installs Workspace Matrix. `make check` is the gate every change passes (docs/STANDARDS.md).
-BUNDLE_ID := local.workspace-matrix
-# A real .app bundle, so macOS lists it as "WorkspaceMatrix" in Privacy & Security.
-APP := $(HOME)/Applications/WorkspaceMatrix.app
-BIN := $(APP)/Contents/MacOS/workspace-matrix
+# Builds, checks and installs Desktop Matrix. `make check` is the gate every change passes (docs/STANDARDS.md).
+BUNDLE_ID := io.github.remusxb.desktop-matrix
+# A real .app bundle, so macOS lists it as "DesktopMatrix" in Privacy & Security.
+APP := $(HOME)/Applications/DesktopMatrix.app
+BIN := $(APP)/Contents/MacOS/desktop-matrix
 PLIST := $(HOME)/Library/LaunchAgents/$(BUNDLE_ID).plist
-CONFIG := $(HOME)/.config/workspace-matrix/config.json
+CONFIG := $(HOME)/.config/desktop-matrix/config.json
 # Only what the process writes to stderr, such as a crash; its own messages are in the unified log (`make logs`).
-STDERR := $(HOME)/Library/Logs/workspace-matrix.log
+STDERR := $(HOME)/Library/Logs/desktop-matrix.log
 DOMAIN := gui/$(shell id -u)
 SWIFT_SOURCES := Package.swift Sources Tests
 # Command Line Tools (no Xcode) ship swift-testing's macro plugin outside the default search path.
@@ -31,7 +31,7 @@ check: lint build test
 install: build
 	mkdir -p $(APP)/Contents/MacOS $(dir $(CONFIG))
 	cp Info.plist $(APP)/Contents/
-	cp .build/release/WorkspaceMatrix $(BIN)
+	cp .build/release/DesktopMatrix $(BIN)
 	# A fixed designated requirement: macOS keeps the granted permissions across rebuilds.
 	codesign -f -s - -r='designated => identifier "$(BUNDLE_ID)"' $(APP)
 	[ -f $(CONFIG) ] || cp config.example.json $(CONFIG)

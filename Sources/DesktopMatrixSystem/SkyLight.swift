@@ -1,5 +1,5 @@
+import DesktopMatrixCore
 import Foundation
-import WorkspaceMatrixCore
 
 /// The private SkyLight (WindowServer) calls the app makes, and the only place they're declared. Each is
 /// looked up at runtime, so a macOS that drops one turns off what needs it instead of stopping the app
