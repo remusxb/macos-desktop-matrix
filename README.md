@@ -1,7 +1,7 @@
 # Desktop Matrix
 
-Your macOS desktops as a grid. Move between them with `ctrl+cmd+arrows`, like GNOME's
-Workspace Matrix extension, with a HUD that shows where you are and a preview of every desktop.
+Your macOS desktops as a grid, like GNOME's desktop grid. Move between them with `ctrl+cmd+arrows`,
+with a HUD that shows where you are and a preview of every desktop.
 
 ![The grid while switching desktops](docs/overlay.png)
 
