@@ -65,7 +65,8 @@ public final class ScreenCapture {
             .compactMap { $0[kCGWindowNumber as String] as? CGWindowID }
         let depth = Dictionary(order.enumerated().map { ($1, $0) }, uniquingKeysWith: { first, _ in first })
         var byDesktop: [Int: [SCWindow]] = [:]
-        for window in content.windows where window.windowLayer == 0 && window.frame.width >= Self.minimumWindowSide
+        for window in content.windows
+        where window.windowLayer == 0 && window.frame.width >= Self.minimumWindowSide
             && window.frame.height >= Self.minimumWindowSide
         {
             let desktops = desktops.desktops(containing: window.windowID)
@@ -92,7 +93,9 @@ public final class ScreenCapture {
                 x: frame.minX * scale, y: (display.frame.height - frame.maxY) * scale,
                 width: frame.width * scale, height: frame.height * scale)
             let filter = SCContentFilter(desktopIndependentWindow: window)
-            guard let image = try? await SCScreenshotManager.captureImage(contentFilter: filter, configuration: configuration(rect.size))
+            guard
+                let image = try? await SCScreenshotManager.captureImage(
+                    contentFilter: filter, configuration: configuration(rect.size))
             else { continue }
             context.draw(image, in: rect)
         }

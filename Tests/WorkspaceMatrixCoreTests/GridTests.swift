@@ -28,7 +28,8 @@ import WorkspaceMatrixCore
 
 @Test func tilesFitOnTheScreen() {
     let screen = CGSize(width: 1600, height: 1000)
-    #expect(TileLayout.tileSize(rows: 3, cols: 3, preferredWidth: 160, screen: screen) == CGSize(width: 160, height: 100))
+    #expect(
+        TileLayout.tileSize(rows: 3, cols: 3, preferredWidth: 160, screen: screen) == CGSize(width: 160, height: 100))
     let huge = TileLayout.tileSize(rows: 8, cols: 10, preferredWidth: 400, screen: screen)
     #expect(huge.width * 10 < screen.width * TileLayout.maxScreenFraction)
     #expect(huge.height * 8 < screen.height * TileLayout.maxScreenFraction)

@@ -105,8 +105,10 @@ struct SettingsView: View {
             } header: {
                 Text("Keys")
             } footer: {
-                Text("Press Record and the combo, or type one like ctrl+cmd+up. It needs ctrl, cmd or alt; keys a–z, 0–9 and arrows.")
-                    .foregroundStyle(.secondary)
+                Text(
+                    "Press Record and the combo, or type one like ctrl+cmd+up. It needs ctrl, cmd or alt; keys a–z, 0–9 and arrows."
+                )
+                .foregroundStyle(.secondary)
             }
         }
         .formStyle(.grouped)
@@ -129,13 +131,19 @@ struct KeyField: View {
             get: { model.keyDrafts[direction] ?? "" },
             set: { typed in
                 model.keyDrafts[direction] = typed
-                if let combo = KeyCombo(typed), model.config.keys[direction] != combo { model.config.keys[direction] = combo }
+                if let combo = KeyCombo(typed), model.config.keys[direction] != combo {
+                    model.config.keys[direction] = combo
+                }
             })
         let recording = model.recording == direction
         HStack {
-            TextField(direction.rawValue.capitalized, text: recording ? .constant("Press the combo… (esc cancels)") : text)
-                .foregroundStyle(recording ? Color.secondary : KeyCombo(text.wrappedValue) == nil ? Color.red : Color.primary)
-                .disabled(recording)
+            TextField(
+                direction.rawValue.capitalized, text: recording ? .constant("Press the combo… (esc cancels)") : text
+            )
+            .foregroundStyle(
+                recording ? Color.secondary : KeyCombo(text.wrappedValue) == nil ? Color.red : Color.primary
+            )
+            .disabled(recording)
             Button(recording ? "Cancel" : "Record") {
                 recording ? model.stopRecording() : model.record(direction)
             }

@@ -1,19 +1,26 @@
 import CoreGraphics
 import Foundation
 import Testing
+
 @testable import WorkspaceMatrixSystem
 
 /// Payloads InstantSpaceSwitcher's C produced for these swipes (captured when the port was checked against it
 /// byte for byte). They're reviewed data: a change here changes what the Dock receives.
 private let golden: [(DockSwipe.Phase, DockSwipe.Direction, String)] = [
-    (.began, .right, """
-    efcdab89674523010000000000000000000000000000000001000000280000001700000000000001000000009919000000000000\
-    000000000000000001000300ffffffff
-    """),
-    (.ended, .left, """
-    efcdab89674523010000000000000000000000000000000002000000280000001700000000000004000000009919000000000000\
-    000000000000000001000300010000001c00000009000000000000000100000000000f270000000000000000
-    """),
+    (
+        .began, .right,
+        """
+        efcdab89674523010000000000000000000000000000000001000000280000001700000000000001000000009919000000000000\
+        000000000000000001000300ffffffff
+        """
+    ),
+    (
+        .ended, .left,
+        """
+        efcdab89674523010000000000000000000000000000000002000000280000001700000000000004000000009919000000000000\
+        000000000000000001000300010000001c00000009000000000000000100000000000f270000000000000000
+        """
+    ),
 ]
 
 @Test func hidPayloadMatchesTheGoldenBytes() throws {

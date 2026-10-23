@@ -22,7 +22,8 @@ enum DockSwipe {
         for _ in 0..<steps {
             // Began, changed and ended: with only two, Mission Control stops working.
             for phase in [Phase.began, .changed, .ended] {
-                let events = needsHIDPayload
+                let events =
+                    needsHIDPayload
                     ? modernEvents(phase, direction, naturalScrolling: natural)
                     : legacyEvents(phase, direction, velocity: legacyVelocityPerStep * Double(steps))
                 guard let events else { return false }
@@ -35,8 +36,8 @@ enum DockSwipe {
     /// The swipe macOS 27 honours: the public gesture fields plus the raw IOHID gesture a trackpad sends.
     static func modernEvents(_ phase: Phase, _ direction: Direction, naturalScrolling: Bool) -> [CGEvent]? {
         guard let swipe = modernSwipe(phase, direction, naturalScrolling: naturalScrolling),
-              let augmented = withHIDPayload(swipe),
-              let companion = CGEvent(source: nil)
+            let augmented = withHIDPayload(swipe),
+            let companion = CGEvent(source: nil)
         else { return nil }
         // The Dock ignores a dock-control event without a gesture event alongside it.
         companion.setIntegerValueField(Field.eventType, value: EventType.gesture)
@@ -107,7 +108,8 @@ enum DockSwipe {
         data.appendLittleEndian(UInt32(0))  // attribute length
         data.appendLittleEndian(UInt32(hasVelocity ? 2 : 1))  // event count
 
-        data.appendHIDEventBase(size: 40, type: hidFluidTouchGesture, options: UInt32(truncatingIfNeeded: (phase & 0xFF) << 24), depth: 0)
+        data.appendHIDEventBase(
+            size: 40, type: hidFluidTouchGesture, options: UInt32(truncatingIfNeeded: (phase & 0xFF) << 24), depth: 0)
         data.appendLittleEndian(fixed1616(event.getDoubleValueField(Field.swipePositionX)))
         data.appendLittleEndian(fixed1616(event.getDoubleValueField(Field.swipePositionY)))
         data.appendLittleEndian(Int32(0))  // position z
@@ -135,8 +137,9 @@ enum DockSwipe {
     private static func naturalScrolling() -> Bool {
         CFPreferencesAppSynchronize(kCFPreferencesAnyApplication)  // pick up a change made while we run
         var valid: DarwinBoolean = false
-        let natural = CFPreferencesGetAppBooleanValue("com.apple.swipescrolldirection" as CFString,
-                                                      kCFPreferencesAnyApplication, &valid)
+        let natural = CFPreferencesGetAppBooleanValue(
+            "com.apple.swipescrolldirection" as CFString,
+            kCFPreferencesAnyApplication, &valid)
         return natural || !valid.boolValue  // unset means the macOS default, natural
     }
 
@@ -173,13 +176,13 @@ enum DockSwipe {
     }
 }
 
-private extension Data {
-    mutating func appendLittleEndian<T: FixedWidthInteger>(_ value: T) {
+extension Data {
+    fileprivate mutating func appendLittleEndian<T: FixedWidthInteger>(_ value: T) {
         Swift.withUnsafeBytes(of: value.littleEndian) { append(contentsOf: $0) }
     }
 
     /// The 16-byte header every IOHID event starts with: size, type, options, depth and 3 reserved bytes.
-    mutating func appendHIDEventBase(size: UInt32, type: UInt32, options: UInt32, depth: UInt8) {
+    fileprivate mutating func appendHIDEventBase(size: UInt32, type: UInt32, options: UInt32, depth: UInt8) {
         appendLittleEndian(size)
         appendLittleEndian(type)
         appendLittleEndian(options)

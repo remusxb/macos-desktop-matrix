@@ -8,7 +8,8 @@ public enum Permissions {
     public static func requestAccessibility() {
         let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue(): true] as CFDictionary
         if !AXIsProcessTrustedWithOptions(options) {
-            Log.app.notice("no Accessibility permission yet: desktops won't switch until it's granted and the app restarts")
+            Log.app.notice(
+                "no Accessibility permission yet: desktops won't switch until it's granted and the app restarts")
         }
     }
 

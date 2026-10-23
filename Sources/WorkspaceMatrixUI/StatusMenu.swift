@@ -12,11 +12,13 @@ public final class StatusMenu: NSObject, NSWindowDelegate {
     public init(model: SettingsModel) {
         self.model = model
         super.init()
-        item.button?.image = NSImage(systemSymbolName: "square.grid.3x3.fill", accessibilityDescription: "Workspace Matrix")
+        item.button?.image = NSImage(
+            systemSymbolName: "square.grid.3x3.fill", accessibilityDescription: "Workspace Matrix")
         let menu = NSMenu()
         menu.addItem(withTitle: "Settings…", action: #selector(openSettings), keyEquivalent: ",").target = self
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Quit Workspace Matrix", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        menu.addItem(
+            withTitle: "Quit Workspace Matrix", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         item.menu = menu
     }
 

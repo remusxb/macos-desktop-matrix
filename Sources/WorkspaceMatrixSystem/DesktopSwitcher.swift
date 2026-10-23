@@ -45,11 +45,11 @@ public struct DesktopSwitcher: Sendable {
     /// "Switch to Desktop 1...16" are symbolic hotkeys 118...133, each (character, key code, modifier flags).
     private static func shortcut(for desktop: Int) -> (CGKeyCode, CGEventFlags)? {
         guard (0..<SymbolicHotKey.desktopCount).contains(desktop),
-              let hotKeys = UserDefaults(suiteName: SymbolicHotKey.domain)?.dictionary(forKey: SymbolicHotKey.key),
-              let entry = hotKeys[String(SymbolicHotKey.firstDesktop + desktop)] as? [String: Any],
-              (entry["enabled"] as? Bool) == true,
-              let parameters = (entry["value"] as? [String: Any])?["parameters"] as? [Int],
-              parameters.count == 3
+            let hotKeys = UserDefaults(suiteName: SymbolicHotKey.domain)?.dictionary(forKey: SymbolicHotKey.key),
+            let entry = hotKeys[String(SymbolicHotKey.firstDesktop + desktop)] as? [String: Any],
+            (entry["enabled"] as? Bool) == true,
+            let parameters = (entry["value"] as? [String: Any])?["parameters"] as? [Int],
+            parameters.count == 3
         else { return nil }
         return (CGKeyCode(parameters[1]), CGEventFlags(rawValue: UInt64(parameters[2])))
     }

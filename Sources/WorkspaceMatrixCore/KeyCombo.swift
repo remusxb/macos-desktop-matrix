@@ -132,7 +132,8 @@ extension KeyCombo: Codable {
     public init(from decoder: any Decoder) throws {
         let text = try decoder.singleValueContainer().decode(String.self)
         guard let combo = KeyCombo(text) else {
-            throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "bad key combo \(text)"))
+            throw DecodingError.dataCorrupted(
+                .init(codingPath: decoder.codingPath, debugDescription: "bad key combo \(text)"))
         }
         self = combo
     }

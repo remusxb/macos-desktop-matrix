@@ -18,7 +18,8 @@ public final class Overlay {
     /// `pin` keeps the panel still while the desktops slide under it.
     public init(rows: Int, cols: Int, tileWidth: Double, hideAfter: Double, pin: (NSWindow) -> Void) {
         self.hideAfter = hideAfter
-        panel = NSPanel(contentRect: .zero, styleMask: [.borderless, .nonactivatingPanel], backing: .buffered, defer: false)
+        panel = NSPanel(
+            contentRect: .zero, styleMask: [.borderless, .nonactivatingPanel], backing: .buffered, defer: false)
         panel.isOpaque = false
         panel.backgroundColor = .clear
         panel.hasShadow = true
@@ -63,7 +64,10 @@ public final class Overlay {
             isShown = true
             model.current = desktop
             center()
-            NSAnimationContext.runAnimationGroup { $0.duration = Style.fadeIn; panel.animator().alphaValue = 1 }
+            NSAnimationContext.runAnimationGroup {
+                $0.duration = Style.fadeIn
+                panel.animator().alphaValue = 1
+            }
         }
         hideTask?.cancel()
         hideTask = Task { [weak self, hideAfter] in
@@ -81,7 +85,10 @@ public final class Overlay {
 
     private func hide() {
         isShown = false
-        NSAnimationContext.runAnimationGroup { $0.duration = Style.fadeOut; panel.animator().alphaValue = 0 }
+        NSAnimationContext.runAnimationGroup {
+            $0.duration = Style.fadeOut
+            panel.animator().alphaValue = 0
+        }
     }
 
     private func center() {

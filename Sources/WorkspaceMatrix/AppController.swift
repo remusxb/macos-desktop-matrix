@@ -108,7 +108,7 @@ final class AppController {
         Task {
             try? await Task.sleep(for: delay)
             guard desktops.state().index == desktop,
-                  let image = await capture.capture(size: overlay.previewPixelSize)
+                let image = await capture.capture(size: overlay.previewPixelSize)
             else { return }
             overlay.setPreview(desktop, image, onlyIfMissing: false)
         }

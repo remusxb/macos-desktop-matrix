@@ -3,7 +3,8 @@ import Testing
 import WorkspaceMatrixCore
 
 @Test func aPartialFileKeepsTheDefaults() throws {
-    let config = try JSONDecoder().decode(Config.self, from: Data(#"{"rows": 0, "cols": 5, "keys": {"up": "alt+k"}}"#.utf8))
+    let config = try JSONDecoder().decode(
+        Config.self, from: Data(#"{"rows": 0, "cols": 5, "keys": {"up": "alt+k"}}"#.utf8))
     #expect(config.rows == 1)
     #expect(config.cols == 5)
     #expect(config.keys[.up]?.description == "alt+k")
@@ -12,7 +13,8 @@ import WorkspaceMatrixCore
 }
 
 @Test func aComboThatDoesntParseKeepsItsDefault() throws {
-    let config = try JSONDecoder().decode(Config.self, from: Data(#"{"keys": {"left": "q", "sideways": "cmd+s"}}"#.utf8))
+    let config = try JSONDecoder().decode(
+        Config.self, from: Data(#"{"keys": {"left": "q", "sideways": "cmd+s"}}"#.utf8))
     #expect(config.keys == Config.defaultKeys)
 }
 

@@ -10,8 +10,8 @@ public enum DesktopPinning {
     @MainActor
     public static func pinAboveDesktops(_ window: NSWindow) {
         guard let connection = SkyLight.mainConnectionID?(), let create = SkyLight.spaceCreate,
-              let setLevel = SkyLight.spaceSetAbsoluteLevel, let show = SkyLight.showSpaces,
-              let add = SkyLight.addWindowsToSpaces
+            let setLevel = SkyLight.spaceSetAbsoluteLevel, let show = SkyLight.showSpaces,
+            let add = SkyLight.addWindowsToSpaces
         else { return }
         let space = create(connection, 1, nil)
         setLevel(connection, space, spaceLevel)

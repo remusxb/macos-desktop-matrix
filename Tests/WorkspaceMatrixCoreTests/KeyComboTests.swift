@@ -28,7 +28,8 @@ import WorkspaceMatrixCore
 }
 
 @Test func readsKeyPresses() {
-    #expect(KeyCombo(virtualKeyCode: UInt16(kVK_UpArrow), modifiers: [.control, .command])?.description == "ctrl+cmd+up")
+    #expect(
+        KeyCombo(virtualKeyCode: UInt16(kVK_UpArrow), modifiers: [.control, .command])?.description == "ctrl+cmd+up")
     #expect(KeyCombo(virtualKeyCode: UInt16(kVK_ANSI_K), modifiers: [.shift]) == nil)
     #expect(KeyCombo(virtualKeyCode: UInt16(kVK_Space), modifiers: [.command]) == nil)
 }

@@ -17,8 +17,8 @@ public struct Desktops: Sendable {
     /// The desktops (by index) a window is on: empty for one on none, several for one on all of them.
     public func desktops(containing window: CGWindowID) -> [Int] {
         guard let display = activeDisplay(), let connection = SkyLight.mainConnectionID?(),
-              let copy = SkyLight.copySpacesForWindows,
-              let spaces = SkyLight.owned(copy(connection, SkyLight.allSpacesMask, [window] as CFArray), as: CFArray.self)
+            let copy = SkyLight.copySpacesForWindows,
+            let spaces = SkyLight.owned(copy(connection, SkyLight.allSpacesMask, [window] as CFArray), as: CFArray.self)
         else { return [] }
         return ((spaces as? [NSNumber]) ?? []).compactMap { display.desktops.firstIndex(of: $0.uint64Value) }
     }
@@ -27,17 +27,19 @@ public struct Desktops: Sendable {
     /// through fullscreen apps too, so they count here, unlike in desktop indexes.
     func swipePositions(toDesktop index: Int) -> (from: Int, to: Int)? {
         guard let display = activeDisplay(), display.desktops.indices.contains(index),
-              let from = display.spaces.firstIndex(of: display.active),
-              let to = display.spaces.firstIndex(of: display.desktops[index])
+            let from = display.spaces.firstIndex(of: display.active),
+            let to = display.spaces.firstIndex(of: display.desktops[index])
         else { return nil }
         return (from, to)
     }
 
     /// The active space, and the spaces of its display: all of them in order, and just the desktops.
-    private func activeDisplay() -> (active: SkyLight.SpaceID, spaces: [SkyLight.SpaceID], desktops: [SkyLight.SpaceID])? {
+    private func activeDisplay() -> (
+        active: SkyLight.SpaceID, spaces: [SkyLight.SpaceID], desktops: [SkyLight.SpaceID]
+    )? {
         guard let connection = SkyLight.mainConnectionID?(), let active = SkyLight.getActiveSpace?(connection),
-              let copy = SkyLight.copyManagedDisplaySpaces,
-              let displays = SkyLight.owned(copy(connection), as: CFArray.self) as? [[String: Any]]
+            let copy = SkyLight.copyManagedDisplaySpaces,
+            let displays = SkyLight.owned(copy(connection), as: CFArray.self) as? [[String: Any]]
         else { return nil }
         for display in displays {
             let spaces = display[Key.spaces] as? [[String: Any]] ?? []

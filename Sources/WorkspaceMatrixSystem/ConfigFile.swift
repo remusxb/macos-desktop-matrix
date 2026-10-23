@@ -29,7 +29,8 @@ public struct ConfigFile: Sendable {
     /// Saves `config`, keeping the file readable: pretty-printed, keys sorted.
     public func save(_ config: Config) {
         do {
-            try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try FileManager.default.createDirectory(
+                at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
             let encoder = JSONEncoder()
             encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
             try encoder.encode(config).write(to: url, options: .atomic)
