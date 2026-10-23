@@ -38,12 +38,25 @@ make install
 ```
 
 This builds `~/Applications/WorkspaceMatrix.app` and starts it now and at every login. macOS then asks
-for two permissions for **Workspace Matrix** in System Settings → Privacy & Security:
+for the two [permissions](#permissions) below; run `make restart` after granting them.
+`make uninstall` removes the app and the login item.
 
-- **Accessibility**, to switch desktops.
-- **Screen & System Audio Recording**, for the previews (optional: without it tiles show their number).
+## Permissions
 
-Run `make restart` after granting them. `make uninstall` removes the app and the login item.
+Both are granted to **Workspace Matrix** in System Settings → Privacy & Security.
+
+| permission | why | without it |
+|---|---|---|
+| **Accessibility** (required) | To switch desktops the app sends input on your behalf: in Normal mode it presses your "Switch to Desktop N" shortcut, in Instant mode it posts a quick trackpad swipe. macOS only lets apps with this permission post such events. | The grid shows up, but the desktop doesn't change. |
+| **Screen & System Audio Recording** (optional) | For the previews: a screenshot of the screen when you arrive on or leave a desktop, and, at launch, captures of the windows on the other desktops to compose theirs. No audio is recorded; macOS just groups the two together. | Tiles show the desktop's number instead of a preview. |
+
+What it doesn't do:
+
+- **No keylogging.** The shortcuts are registered as system hotkeys, so the app is only told when one of
+  them is pressed; it never sees anything else you type, and it doesn't ask for Input Monitoring.
+  Recording a combo in Settings reads keys only while you're recording, in its own window.
+- **Nothing leaves your Mac.** Previews are kept in memory only, never written to disk, and the app makes
+  no network connections.
 
 ## Settings
 
